@@ -15,7 +15,7 @@ import android.widget.EditText;
 //dlq
 public class MainActivity extends Activity {
 
-	String LOG = "MainActivity";
+	String LOG = "MainActivity"; //dsdfdsf
 	private AudioWrapper audioWrapper;
 	// View
 	private Button btnStartRecord;
