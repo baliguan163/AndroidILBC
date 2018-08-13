@@ -8,18 +8,16 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import xmu.swordbearer.audio.AudioCodec;
-import xmu.swordbearer.audio.data.AudioData;
+import com.audio.demo.data.AudioData;
+import com.audio.lib.AudioCodec;
+
 import android.util.Log;
 
 public class AudioEncoder implements Runnable {
 	String LOG = "AudioEncoder";
-
 	private static AudioEncoder encoder;
 	private boolean isEncoding = false;
-
 	private List<AudioData> dataList = null;
-
 	public static AudioEncoder getInstance() {
 		if (encoder == null) {
 			encoder = new AudioEncoder();

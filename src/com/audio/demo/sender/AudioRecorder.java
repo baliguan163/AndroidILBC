@@ -1,7 +1,7 @@
 package com.audio.demo.sender;
 
+import com.audio.lib.AudioConfig;
 
-import xmu.swordbearer.audio.AudioConfig;
 import android.media.AudioRecord;
 import android.util.Log;
 

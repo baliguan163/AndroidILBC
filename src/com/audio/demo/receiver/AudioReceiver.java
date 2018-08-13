@@ -5,7 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import xmu.swordbearer.audio.NetConfig;
+import com.audio.lib.NetConfig;
+
 import android.util.Log;
 
 public class AudioReceiver implements Runnable {

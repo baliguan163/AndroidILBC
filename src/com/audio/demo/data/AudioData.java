@@ -3,7 +3,7 @@ package com.audio.demo.data;
 public class AudioData {
 	int size;
 	byte[] realData;
-
+	
 	public int getSize() {
 		return size;
 	}

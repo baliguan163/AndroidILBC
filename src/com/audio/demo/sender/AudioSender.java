@@ -11,8 +11,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import xmu.swordbearer.audio.NetConfig;
-import xmu.swordbearer.audio.data.AudioData;
+import com.audio.demo.data.AudioData;
+import com.audio.lib.NetConfig;
+
 import android.util.Log;
 
 public class AudioSender implements Runnable {

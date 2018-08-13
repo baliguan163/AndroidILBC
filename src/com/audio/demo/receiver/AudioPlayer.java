@@ -8,8 +8,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import xmu.swordbearer.audio.AudioConfig;
-import xmu.swordbearer.audio.data.AudioData;
+import com.audio.demo.data.AudioData;
+import com.audio.lib.AudioConfig;
+
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
