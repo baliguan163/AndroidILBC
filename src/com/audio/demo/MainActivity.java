@@ -39,7 +39,6 @@ public class MainActivity extends Activity {
 		btnStopListen = (Button) findViewById(R.id.stopListen);
 		ipEditText = (EditText) findViewById(R.id.edittext_ip);
 
-		//
 		btnStopRecord.setEnabled(false);
 		btnStopListen.setEnabled(false);
 
