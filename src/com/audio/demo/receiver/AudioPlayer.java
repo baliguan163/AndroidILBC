@@ -20,13 +20,10 @@ import android.util.Log;
 public class AudioPlayer implements Runnable {
 	String LOG = "AudioPlayer ";
 	private static AudioPlayer player;
-
 	private List<AudioData> dataList = null;
 	private AudioData playData;
 	private boolean isPlaying = false;
-
 	private AudioTrack audioTrack;
-
 	//
 	private File file;
 	private FileOutputStream fos;
