@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-//dlqMY
+//dlqMYtt
 public class MainActivity extends Activity {
 
 	String LOG = "MainActivity"; //dlqMY
