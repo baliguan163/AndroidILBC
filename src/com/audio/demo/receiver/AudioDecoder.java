@@ -69,17 +69,16 @@ public class AudioDecoder implements Runnable {
 		this.isDecoding = true;
 		// init ILBC parameter:30 ,20, 15
 		AudioCodec.audio_codec_init(30);
-
 		Log.d(LOG, LOG + "initialized decoder");
 		int decodeSize = 0;
+		
 		while (isDecoding) {
 			while (dataList.size() > 0) {
 				AudioData encodedData = dataList.remove(0);
 				decodedData = new byte[MAX_BUFFER_SIZE];
 				byte[] data = encodedData.getRealData();
 				//
-				decodeSize = AudioCodec.audio_decode(data, 0,
-						encodedData.getSize(), decodedData, 0);
+				decodeSize = AudioCodec.audio_decode(data,0,encodedData.getSize(), decodedData, 0);
 				Log.e(LOG, "解码一次 " + data.length + " 解码后的长度 " + decodeSize);
 				if (decodeSize > 0) {
 					// add decoded audio to player
@@ -90,7 +89,7 @@ public class AudioDecoder implements Runnable {
 			}
 		}
 		System.out.println(LOG + "stop decoder");
-		// stop playback audio
+		//stop playback audio
 		player.stopPlaying();
 	}
 
