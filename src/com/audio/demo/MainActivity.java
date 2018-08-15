@@ -13,10 +13,9 @@ import android.widget.EditText;
 
 //dlqMYtt
 public class MainActivity extends Activity {
-
 	String LOG = "MainActivity"; //dlqMY
 	private AudioWrapper audioWrapper;
-	// View
+	//View
 	private Button btnStartRecord;
 	private Button btnStopRecord;
 	private Button btnStartListen;
@@ -38,7 +37,6 @@ public class MainActivity extends Activity {
 		btnStopRecord = (Button) findViewById(R.id.stopRecord);
 		btnStopListen = (Button) findViewById(R.id.stopListen);
 		ipEditText = (EditText) findViewById(R.id.edittext_ip);
-
 		//
 		btnStopRecord.setEnabled(false);
 		btnStopListen.setEnabled(false);
@@ -61,6 +59,7 @@ public class MainActivity extends Activity {
 				audioWrapper.stopRecord();
 			}
 		});
+		
 		btnStartListen.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View arg0) {

@@ -109,7 +109,8 @@ jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,
 		bytes_to_encode -= truncated;
 	}
 
-	while (bytes_to_encode > 0) {
+	while (bytes_to_encode > 0)
+	{
 		int _encoded;
 		_encoded = encode((short *) samples, data);
 		samples += g_enc_inst.blockl * 2;

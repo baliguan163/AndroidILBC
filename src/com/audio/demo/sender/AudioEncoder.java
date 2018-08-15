@@ -69,7 +69,8 @@ public class AudioEncoder implements Runnable {
 		AudioCodec.audio_codec_init(30);
 
 		isEncoding = true;
-		while (isEncoding) {
+		while (isEncoding) 
+		{
 			if (dataList.size() == 0) {
 				try {
 					Thread.sleep(20);
@@ -82,8 +83,7 @@ public class AudioEncoder implements Runnable {
 				AudioData rawData = dataList.remove(0);
 				encodedData = new byte[rawData.getSize()];
 				//
-				encodeSize = AudioCodec.audio_encode(rawData.getRealData(), 0,
-						rawData.getSize(), encodedData, 0);
+				encodeSize = AudioCodec.audio_encode(rawData.getRealData(),0,rawData.getSize(), encodedData, 0);
 				System.out.println();
 				if (encodeSize > 0) {
 					sender.addData(encodedData, encodeSize);

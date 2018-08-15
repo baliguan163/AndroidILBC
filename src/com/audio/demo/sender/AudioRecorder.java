@@ -10,6 +10,7 @@ public class AudioRecorder implements Runnable {
 	String LOG = "Recorder ";
 
 	private boolean isRecording = false;
+	
 	private AudioRecord audioRecord;
 
 	private static final int BUFFER_FRAME_SIZE = 480;
@@ -27,7 +28,6 @@ public class AudioRecorder implements Runnable {
 	 */
 	public void startRecording() {
 		bufferSize = BUFFER_FRAME_SIZE;
-
 		audioBufSize = AudioRecord.getMinBufferSize(AudioConfig.SAMPLERATE,
 				AudioConfig.RECORDER_CHANNEL_CONFIG, AudioConfig.AUDIO_FORMAT);
 		if (audioBufSize == AudioRecord.ERROR_BAD_VALUE) {
@@ -65,7 +65,8 @@ public class AudioRecorder implements Runnable {
 		System.out.println(LOG + "start recording");
 
 		this.isRecording = true;
-		while (isRecording) {
+		while (isRecording) 
+		{
 			bufferRead = audioRecord.read(samples, 0, bufferSize);
 			if (bufferRead > 0) {
 				// add data to encoder
