@@ -52,7 +52,7 @@ static int decode(unsigned char *data, short *samples, int mode) {
 		point = block[i];
 		if (point < MIN_SAMPLE) { //-32768
 			point = MIN_SAMPLE;
-		} else if (point > MAX_SAMPLE) { // 32767
+		} else if (point > MAX_SAMPLE) {  //32767
 			point = MAX_SAMPLE;
 		}
 //		samples[i] = point;
@@ -67,16 +67,7 @@ jint Java_com_audio_lib_AudioCodec_audio_1codec_1init(JNIEnv *env,jobject this, 
 	initDecode(&g_dec_inst, mode, 1);
 }
 
-/**  raw---->amr
- *JNI 函数，和Java层的代码包名对应
- 从Java层传入一段采样的音频，将其编码成AMR
- sampleArray:采集的一段音频数据
- sampleOffset:采样数据偏移量
- sampleLength:音频数据长度
- dataArray：编码后的数据，返回给Java层让其处理（比如使用UDP 发送给另一方）
- dataOffset:偏移量；
- return：编码后的数据长度（采集960B的原始数据，编码成AMR后则返回100B）
- */
+
 jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,jobject this,
 		jbyteArray sampleArray, jint sampleOffset,jint sampleLength,
 		jbyteArray dataArray, jint dataOffset) {
