@@ -63,13 +63,13 @@ public class AudioRecorder implements Runnable {
 		System.out.println(LOG + "audioRecord startRecording()");
 		audioRecord.startRecording();
 		System.out.println(LOG + "start recording");
-
+		
 		this.isRecording = true;
 		while (isRecording) 
 		{
 			bufferRead = audioRecord.read(samples, 0, bufferSize);
 			if (bufferRead > 0) {
-				// add data to encoder
+				//add data to encoder
 				encoder.addData(samples, bufferRead);
 			}
 			try {

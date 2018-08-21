@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <math.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "./ilbc_src/iLBC_define.h"
 #include "./ilbc_src/iLBC_decode.h"
@@ -96,6 +97,7 @@ jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,jobject this,
 		LOGE("Ignore last %d bytes", truncated);
 		bytes_to_encode -= truncated;
 	}
+
 	while (bytes_to_encode > 0)
 	{
 		int _encoded;
@@ -105,6 +107,7 @@ jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,jobject this,
 		bytes_encoded += _encoded;//编码后数据长度
 		bytes_to_encode -= g_enc_inst.blockl * 2;
 	}
+
 	LOGD("encode len:(%d->%d)",sampleLength,bytes_encoded);
 	samples -= sampleLength;//输入数据指针回到起始
 	data -= bytes_encoded;//输出数据指针回到起始
@@ -138,8 +141,8 @@ jint Java_com_audio_lib_AudioCodec_audio_1decode(JNIEnv *env,jobject this,
 	{
 		int _decoded;
 		_decoded = decode(data, (short *)samples, 1);
-		samples += _decoded;
-		data += g_dec_inst.no_of_bytes;//30->50  20->38
+		samples += _decoded;//30->240*2=480    20->160*2=320
+		data += g_dec_inst.no_of_bytes;//30->50   20->38
 		bytes_decoded += _decoded;
 		bytes_to_decode -= g_dec_inst.no_of_bytes;
 	}
@@ -150,3 +153,5 @@ jint Java_com_audio_lib_AudioCodec_audio_1decode(JNIEnv *env,jobject this,
 	(*env)->ReleaseByteArrayElements(env, dataArray, data, JNI_COPY);
 	return bytes_decoded;
 }
+
+
