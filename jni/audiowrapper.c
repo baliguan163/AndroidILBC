@@ -30,11 +30,12 @@ static int encode(short *samples, unsigned char *data) {
 	// Convert to float representaion of voice signal.
 	for (i = 0; i < g_enc_inst.blockl; i++) {
 		block[i] = samples[i];
-		LOGD("encode samples:%d(%x)",i,samples[i]);
+//		LOGD("encode samples:%d(%x)",i,samples[i]);
 	}
 	iLBC_encode(data, block, &g_enc_inst);
 	return g_enc_inst.no_of_bytes;
 }
+
 /*解码一次
  */
 static int decode(unsigned char *data, short *samples, int mode) {
@@ -58,7 +59,7 @@ static int decode(unsigned char *data, short *samples, int mode) {
 		}
 //		samples[i] = point;
 		samples[i] = (short)((int)point >> 8 | (int)point << 8 & 0xff);
-		LOGD("decode point:%d(%f->%d->%x)",i,point,samples[i],samples[i]);
+//		LOGD("decode point:%d(%f->%d->%x)",i,point,samples[i],samples[i]);
 	}
 	return g_dec_inst.blockl * 2;
 }
@@ -77,6 +78,7 @@ jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,jobject this,
 	jbyte *samples, *data;
 	int bytes_to_encode;
 	int bytes_encoded;
+
 	LOGD("encode(%p, %d, %d,%p, %d)",
 			sampleArray, sampleOffset, sampleLength,
 			dataArray, dataOffset);
@@ -109,8 +111,9 @@ jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,jobject this,
 	}
 
 	LOGD("encode len:(%d->%d)",sampleLength,bytes_encoded);
+
 	samples -= sampleLength;//输入数据指针回到起始
-	data -= bytes_encoded;//输出数据指针回到起始
+	data -= bytes_encoded;  //输出数据指针回到起始
 	(*env)->ReleaseByteArrayElements(env, sampleArray, samples, JNI_COPY);
 	(*env)->ReleaseByteArrayElements(env, dataArray, data, JNI_COPY);
 	return bytes_encoded;
@@ -123,9 +126,9 @@ jint Java_com_audio_lib_AudioCodec_audio_1decode(JNIEnv *env,jobject this,
 	jbyte *samples, *data;
 	int bytes_to_decode, bytes_decoded;
 
-	LOGD("decode(%p, %d, %d,%p,%d)",
-			    dataArray, dataOffset, dataLength,
-			    sampleArray, sampleOffset);
+//	LOGD("decode(%p, %d, %d,%p,%d)",
+//			    dataArray, dataOffset, dataLength,
+//			    sampleArray, sampleOffset);
 
 	samples_sz = (*env)->GetArrayLength(env, sampleArray);
 	samples = (*env)->GetByteArrayElements(env, sampleArray, JNI_COPY);
@@ -146,7 +149,7 @@ jint Java_com_audio_lib_AudioCodec_audio_1decode(JNIEnv *env,jobject this,
 		bytes_decoded += _decoded;
 		bytes_to_decode -= g_dec_inst.no_of_bytes;
 	}
-	LOGD("decode len:(%d->%d)",dataLength,bytes_decoded);
+//	LOGD("decode len:(%d->%d)",dataLength,bytes_decoded);
 	samples -= bytes_decoded;
 	data -= dataLength;
 	(*env)->ReleaseByteArrayElements(env, sampleArray, samples, JNI_COPY);
