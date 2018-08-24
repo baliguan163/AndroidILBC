@@ -22,6 +22,8 @@
 static iLBC_Enc_Inst_t g_enc_inst;
 static iLBC_Dec_Inst_t g_dec_inst;
 
+//JavaVM *gJavaVM;  //创建javavm的全局变量
+
 /* 编码一次
  */
 static int encode(short *samples, unsigned char *data) {
@@ -67,6 +69,7 @@ static int decode(unsigned char *data, short *samples, int mode) {
 jint Java_com_audio_lib_AudioCodec_audio_1codec_1init(JNIEnv *env,jobject this, jint mode) {
 	initEncode(&g_enc_inst, mode);
 	initDecode(&g_dec_inst, mode, 1);
+//	(*env)->GetJavaVM(env,&gJavaVM);//来获取javavm指针,保存到vm中. env是当前线程的变量.
 }
 
 
@@ -78,11 +81,12 @@ jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,jobject this,
 	jbyte *samples, *data;
 	int bytes_to_encode;
 	int bytes_encoded;
+//	JNIEnv *env;
+//	(*gJavaVM)->AttachCurrentThread(gJavaVM,&env, NULL);
 
-	LOGD("encode(%p, %d, %d,%p, %d)",
-			sampleArray, sampleOffset, sampleLength,
-			dataArray, dataOffset);
-
+//	LOGD("encode(%p, %d, %d,%p, %d)",
+//			sampleArray, sampleOffset, sampleLength,
+//			dataArray, dataOffset);
 	samples_sz = (*env)->GetArrayLength(env, sampleArray);
 	samples = (*env)->GetByteArrayElements(env, sampleArray, JNI_COPY);
 	data_sz = (*env)->GetArrayLength(env, dataArray);
@@ -105,17 +109,17 @@ jint Java_com_audio_lib_AudioCodec_audio_1encode(JNIEnv *env,jobject this,
 		int _encoded;
 		_encoded = encode((short *) samples, data);//输出->50
 		samples += g_enc_inst.blockl * 2;//输入数据偏移
-		data += _encoded;//编码后存储位置偏移
+		data += _encoded; //编码后存储位置偏移
 		bytes_encoded += _encoded;//编码后数据长度
 		bytes_to_encode -= g_enc_inst.blockl * 2;
 	}
 
-	LOGD("encode len:(%d->%d)",sampleLength,bytes_encoded);
-
+    //LOGD("encode len:(%d->%d)",sampleLength,bytes_encoded);
 	samples -= sampleLength;//输入数据指针回到起始
 	data -= bytes_encoded;  //输出数据指针回到起始
 	(*env)->ReleaseByteArrayElements(env, sampleArray, samples, JNI_COPY);
 	(*env)->ReleaseByteArrayElements(env, dataArray, data, JNI_COPY);
+    //(*gJavaVM)->DetachCurrentThread(gJavaVM);
 	return bytes_encoded;
 }
 
@@ -143,13 +147,13 @@ jint Java_com_audio_lib_AudioCodec_audio_1decode(JNIEnv *env,jobject this,
 	while (bytes_to_decode > 0)
 	{
 		int _decoded;
-		_decoded = decode(data, (short *)samples, 1);
+		_decoded = decode(data, (short *)samples, 1); //480
 		samples += _decoded;//30->240*2=480    20->160*2=320
 		data += g_dec_inst.no_of_bytes;//30->50   20->38
 		bytes_decoded += _decoded;
 		bytes_to_decode -= g_dec_inst.no_of_bytes;
 	}
-//	LOGD("decode len:(%d->%d)",dataLength,bytes_decoded);
+    //LOGD("decode len:(%d->%d)",dataLength,bytes_decoded);
 	samples -= bytes_decoded;
 	data -= dataLength;
 	(*env)->ReleaseByteArrayElements(env, sampleArray, samples, JNI_COPY);
